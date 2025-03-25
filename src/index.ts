@@ -1,6 +1,7 @@
 /** Import des librairies */
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { getOneCartoonById } from "./resolvers/cartoon.resolver";
 
 const cartoons = [
   {
@@ -30,18 +31,19 @@ const typeDefs = `#graphql
   type Cartoon {
     id: ID
     name: String
-    description: String
   }
 
   # The "Query" type is special: it lists all of the available queries
   type Query {
-    getCartoons: [Cartoon]
+    getCartoons: [Cartoon],
+    getOneCartoonById: Cartoon,
   }
 `;
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
     getCartoons: () => cartoons,
+    getOneCartoonById,
   },
 };
 
