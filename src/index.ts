@@ -1,15 +1,17 @@
 /** Import des librairies */
 
-import { Cartoon, CartoonInput } from "./schemas/cartoon.schema";
-import { Personnage, PersonnageInput } from "./schemas/personnage.schema";
 import {
   createCartoon,
   deleteCartoon,
   getOneCartoonById,
 } from "./resolvers/cartoon.resolver";
+import { Cartoon, CartoonInput } from "./schemas/cartoon.schema";
+import { Personnage, PersonnageInput } from "./schemas/personnage.schema";
 
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { dataSource } from "./client";
+`ìmport "reflect-metadata"`;
 
 const cartoons = [
   {
@@ -72,8 +74,10 @@ const server = new ApolloServer({
   resolvers,
 });
 
+
 /** Fonction auto appellée (évite la mise en constante) permettant de lancer le serveur */
 (async () => {
+  await dataSource.initialize();
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
   });
