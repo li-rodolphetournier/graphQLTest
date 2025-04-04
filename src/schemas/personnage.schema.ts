@@ -1,12 +1,17 @@
-export const Personnage = `{
-  id: ID
-  name: String
-  role: String
-  short_description: String
-}`;
+import { Field, InputType } from "type-graphql";
 
-export const PersonnageInput = `{
-  name: String
-  role: String
-  short_description: String
-}`;
+// Supprimer les anciennes définitions en chaîne
+// export const Personnage = `...`;
+// export const PersonnageInput = `...`;
+
+@InputType()
+export class PersonnageInput {
+  @Field()
+  name: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  picture?: string;
+}
